@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -12,8 +11,7 @@
     <AssemblyName>TestFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,13 +42,22 @@
     <Reference Include="WebDriver.Support, Version=3.14.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.Support.3.14.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
+    <Reference Include="RelevantCodes.ExtentReports">
+      <HintPath>..\packages\ExtentReports.2.41.0\lib\RelevantCodes.ExtentReports.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="utils\Browsers.cs" />
-    <Compile Include="utils\Reports.cs" />
-    <Compile Include="utils\ReportsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utils\BaseTest.cs" />
+    <Compile Include="pages\FaqPage.cs" />
+    <Compile Include="pages\HomePage.cs" />
+    <Compile Include="pages\MattressPlp.cs" />
+    <Compile Include="pages\PageFooter.cs" />
+    <Compile Include="pages\PageHeader.cs" />
+    <Compile Include="test\BR_Test.cs" />
+    <Compile Include="utils\DriverProvider.cs" />
+    <Compile Include="utils\ReportingManager.cs" />
+    <Compile Include="utils\ReportingTasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

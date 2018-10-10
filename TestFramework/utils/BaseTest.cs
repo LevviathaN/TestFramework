@@ -2,37 +2,49 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelevantCodes.ExtentReports;
+
+using TestFramework.utils;
 
 namespace TestFramework
 {
     [TestFixture]
     public class BaseTest
     {
-        IWebDriver driver;
+        private ReportingTasks reporter;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void startTest()
         {
-            Browsers.Init();
+            DriverProvider.Init();
+            reporter.InitializeTest();
+        }
+
+        [TearDown]
+        public void endTest()
+        {
+            DriverProvider.Close();
+            reporter.FinalizeTest();
+        }
+
+
+        [OneTimeSetUp]
+        public void beginReporting()
+        {
+            ExtentReports extentReports = ReportingManager.Instance;
+            extentReports.LoadConfig(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
+            reporter = new ReportingTasks(extentReports);
         }
 
         [OneTimeTearDown]
-        public void endTest()
+        public void finishReporting()
         {
-            Browsers.Close();
-        }
-
-        [Test]
-        public void TestMethod()
-        {
-            // TODO: Add your test code here
-            Assert.Pass("Your first passing test");
-            driver.FindElement(By.XPath(".//*[@class='gsfi']")).SendKeys("Test");
-
+            reporter.CleanUpReporting();
         }
     }
 }
