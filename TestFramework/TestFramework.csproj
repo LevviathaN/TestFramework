@@ -58,6 +58,8 @@
     <Compile Include="utils\DriverProvider.cs" />
     <Compile Include="utils\ReportingManager.cs" />
     <Compile Include="utils\ReportingTasks.cs" />
+    <Compile Include="test\Comparison_Test.cs" />
+    <Compile Include="pages\BasePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
