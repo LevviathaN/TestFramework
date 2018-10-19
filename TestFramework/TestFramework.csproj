@@ -54,12 +54,13 @@
     <Compile Include="pages\MattressPlp.cs" />
     <Compile Include="pages\PageFooter.cs" />
     <Compile Include="pages\PageHeader.cs" />
-    <Compile Include="test\BR_Test.cs" />
     <Compile Include="utils\DriverProvider.cs" />
     <Compile Include="utils\ReportingManager.cs" />
     <Compile Include="utils\ReportingTasks.cs" />
     <Compile Include="test\Comparison_Test.cs" />
     <Compile Include="pages\BasePage.cs" />
+    <Compile Include="pages\BlackPlp.cs" />
+    <Compile Include="utils\Pages.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

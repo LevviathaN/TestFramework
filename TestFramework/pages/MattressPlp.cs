@@ -10,20 +10,23 @@ namespace TestFramework.pages
     public class MattressPlp:BasePage
     {
         private static MattressPlp instance;
-        public static MattressPlp Instance;
+        public static MattressPlp Instance = (instance != null) ? instance : new MattressPlp();
 
-        public MattressPlp()
-        {
-        }
 
         /* Page elements */
-        [FindsBy(How = How.CssSelector, Using = "a.action.compare.primary.btn")]
-        private IWebElement compareButton;
+        //private static IWebElement
+        //addToCompareButton = DriverProvider.getDriver.FindElement(By.XPath("(.//span[text()='Compare +'])[3]")),
+        //compareButton = DriverProvider.getDriver.FindElement(By.CssSelector("a.action.compare.primary.btn")),
+        //confirmSelectionRemoval = DriverProvider.getDriver.FindElement(By.CssSelector(".action-primary.action-accept"));
 
-        [FindsBy(How = How.CssSelector, Using = ".action-primary.action-accept")]
-        private IWebElement confirmSelectionRemoval;
+        [FindsBy(How = How.XPath, Using = "(.//span[text()='Compare +'])[3]")]
+        private static IWebElement addToCompareButton;
+
 
         /* Page methods */
-        
+        public void addToCompare()
+        {
+            addToCompareButton.Click();
+        }
     }
 }
