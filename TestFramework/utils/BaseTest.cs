@@ -10,41 +10,50 @@ using System.Threading.Tasks;
 using RelevantCodes.ExtentReports;
 
 using TestFramework.utils;
+using TestFramework.pages;
 
 namespace TestFramework
 {
     [TestFixture]
     public class BaseTest
     {
-        private ReportingTasks reporter;
+        //private ReportingTasks reporter;
 
         [SetUp]
         public void startTest()
         {
-            DriverProvider.Init();
-            reporter.InitializeTest();
+            BasePage.thread.Value = DriverProvider.getDriver;
+            //reporter.InitializeTest();
+
         }
 
         [TearDown]
         public void endTest()
         {
             DriverProvider.Close();
-            reporter.FinalizeTest();
+            //reporter.FinalizeTest();
         }
 
 
         [OneTimeSetUp]
         public void beginReporting()
         {
-            ExtentReports extentReports = ReportingManager.Instance;
-            extentReports.LoadConfig(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
-            reporter = new ReportingTasks(extentReports);
+            DriverProvider.Init();
+            //ExtentReports extentReports = ReportingManager.Instance;
+            //extentReports.LoadConfig(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
+            //reporter = new ReportingTasks(extentReports);
+
         }
 
         [OneTimeTearDown]
         public void finishReporting()
         {
-            reporter.CleanUpReporting();
+            //reporter.CleanUpReporting();
+        }
+
+        public void setUp()
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -12,29 +13,23 @@ namespace TestFramework.pages
 {
     public class BasePage
     {
-        public static IWebDriver driver = DriverProvider.getDriver;
-        public static Actions action = new Actions(driver);
-        public static WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, 5));
+        public static ThreadLocal<IWebDriver> thread = new ThreadLocal<IWebDriver>();
+        public static IWebDriver driver() {return thread.Value;}
+        //public static IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
 
-        public static IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-        public static string mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
-        public static string mouseOverScript2 = "var evObj = document.createEvent('MouseEvents');" +
-                "evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);" +
-            "arguments[0].dispatchEvent(evObj);";
-
+        public static string
+        mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}",
+        mouseOverScript2 = "var evObj = document.createEvent('MouseEvents'); evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null); arguments[0].dispatchEvent(evObj);",
+        clickScript = "arguments[0].click();";
 
 
-        public BasePage()
-        {
-
-        }
 
         public static void hoverAndClick(IWebElement toHover, IWebElement toClick)
         {
             try
             {
-                js.ExecuteScript(mouseOverScript, toHover);
-                toClick.Click();
+                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover);
+                ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, toClick);
             }
             catch (Exception)
             {
@@ -47,9 +42,9 @@ namespace TestFramework.pages
         {
             try
             {
-                js.ExecuteScript(mouseOverScript, toHover1);
-                js.ExecuteScript(mouseOverScript, toHover2);
-                toClick.Click();
+                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover1);
+                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover2);
+                ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, toClick);
             }
             catch (Exception)
             {

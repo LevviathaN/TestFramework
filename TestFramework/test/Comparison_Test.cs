@@ -14,7 +14,7 @@ namespace TestFramework.test
         [Test]
         public void comparisonTest()
         {
-            PageHeader.openBlackPlp();
+            PageHeader.openMattressPlp();
         }
     }
 }
