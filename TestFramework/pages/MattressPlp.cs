@@ -41,5 +41,7 @@ namespace TestFramework.pages
         {
             click(shopNowButton);
         }
+
+
     }
 }

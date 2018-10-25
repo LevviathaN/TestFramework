@@ -15,13 +15,8 @@ namespace TestFramework.test
         [Test]
         public void comparisonTest()
         {
-            PageHeader header = PageHeader.Instance;
-            MattressPlp mattressPlp = Pages.mattressPlp;
-
             Console.WriteLine("Comparison Test Method execution");
-            //PageFactory.InitElements(DriverProvider.getDriver, header);
             Pages.header.openMattressPlp();
-            //PageFactory.InitElements(DriverProvider.getDriver, mattressPlp);
             Pages.mattressPlp.addToCompare();
         }
     }

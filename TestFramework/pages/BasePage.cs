@@ -23,7 +23,8 @@ namespace TestFramework.pages
         public static string
         mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}",
         mouseOverScript2 = "var evObj = document.createEvent('MouseEvents'); evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null); arguments[0].dispatchEvent(evObj);",
-        clickScript = "arguments[0].click();";
+        clickScript = "arguments[0].click();",
+        DragNdropScript = "var ball = document.getElementById('ball'); ball.style.position = 'absolute'; moveAt(e); ";
 
 
 
@@ -62,6 +63,12 @@ namespace TestFramework.pages
         }
 
         public static IWebElement click(IWebElement element)
+        {
+            ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, element);
+            return element;
+        }
+
+        public static IWebElement dragNdrop(IWebElement element)
         {
             ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, element);
             return element;
