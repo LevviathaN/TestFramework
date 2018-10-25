@@ -22,15 +22,17 @@ namespace TestFramework
         [SetUp]
         public void startTest()
         {
-            BasePage.thread.Value = DriverProvider.getDriver;
-            //reporter.InitializeTest();
+            Console.WriteLine("Set Up");
+            //ExtentReports extentReports = ReportingManager.Instance;
+            //extentReports.LoadConfig(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
+            //reporter = new ReportingTasks(extentReports);
 
         }
 
         [TearDown]
         public void endTest()
         {
-            DriverProvider.Close();
+            Console.WriteLine("Tear Down");
             //reporter.FinalizeTest();
         }
 
@@ -38,22 +40,20 @@ namespace TestFramework
         [OneTimeSetUp]
         public void beginReporting()
         {
+            Console.WriteLine("One Time Set Up");
             DriverProvider.Init();
-            //ExtentReports extentReports = ReportingManager.Instance;
-            //extentReports.LoadConfig(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
-            //reporter = new ReportingTasks(extentReports);
+            BasePage.thread.Value = DriverProvider.getDriver;
+            //reporter.InitializeTest();
 
         }
 
         [OneTimeTearDown]
         public void finishReporting()
         {
+            Console.WriteLine("One Time Tear Down");
+            DriverProvider.Close();
             //reporter.CleanUpReporting();
         }
 
-        public void setUp()
-        {
-
-        }
     }
 }

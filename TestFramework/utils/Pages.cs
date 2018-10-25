@@ -16,6 +16,11 @@ namespace TestFramework.utils
             return page;
         }
 
+        public static PageHeader header
+        {
+            get { return getPages<PageHeader>(); }
+        }
+
         public static MattressPlp mattressPlp
         {
             get { return getPages<MattressPlp>(); }

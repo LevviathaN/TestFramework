@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using TestFramework.utils;
 using TestFramework.pages;
 using RelevantCodes.ExtentReports;
+using OpenQA.Selenium.Support.PageObjects;
 
 namespace TestFramework.test
 {
@@ -14,7 +15,14 @@ namespace TestFramework.test
         [Test]
         public void comparisonTest()
         {
-            PageHeader.openMattressPlp();
+            PageHeader header = PageHeader.Instance;
+            MattressPlp mattressPlp = Pages.mattressPlp;
+
+            Console.WriteLine("Comparison Test Method execution");
+            //PageFactory.InitElements(DriverProvider.getDriver, header);
+            Pages.header.openMattressPlp();
+            //PageFactory.InitElements(DriverProvider.getDriver, mattressPlp);
+            Pages.mattressPlp.addToCompare();
         }
     }
 }

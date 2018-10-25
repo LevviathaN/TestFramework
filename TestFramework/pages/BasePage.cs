@@ -13,6 +13,9 @@ namespace TestFramework.pages
 {
     public class BasePage
     {
+        public string pageURL = "";
+        public string pageTitle = "";
+
         public static ThreadLocal<IWebDriver> thread = new ThreadLocal<IWebDriver>();
         public static IWebDriver driver() {return thread.Value;}
         //public static IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
@@ -50,6 +53,18 @@ namespace TestFramework.pages
             {
                 hoverAndClick(toHover1, toHover2, toClick);
             }
+        }
+
+        public static IWebElement hover(IWebElement element)
+        {
+            ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, element);
+            return element;
+        }
+
+        public static IWebElement click(IWebElement element)
+        {
+            ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, element);
+            return element;
         }
 
         //public static void waitForElement()

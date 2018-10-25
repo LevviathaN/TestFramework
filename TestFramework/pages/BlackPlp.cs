@@ -14,6 +14,8 @@ namespace TestFramework.pages
 
         public BlackPlp()
         {
+            pageURL = "/black";
+            pageTitle = "Black";
         }
 
         //public static IWebElement shopNowButton = DriverProvider.getDriver.FindElement(By.XPath("(.//a[text()='Shop now'])[1]"));

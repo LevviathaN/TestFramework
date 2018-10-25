@@ -61,6 +61,7 @@
     <Compile Include="pages\BasePage.cs" />
     <Compile Include="pages\BlackPlp.cs" />
     <Compile Include="utils\Pages.cs" />
+    <Compile Include="test\Product_Filter_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
