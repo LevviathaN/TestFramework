@@ -19,16 +19,15 @@ namespace TestFramework.pages
         }
 
         /* Page elements */
-        //private static IWebElement
-        //addToCompareButton = DriverProvider.getDriver.FindElement(By.XPath("(.//span[text()='Compare +'])[3]")),
-        //compareButton = DriverProvider.getDriver.FindElement(By.CssSelector("a.action.compare.primary.btn")),
-        //confirmSelectionRemoval = DriverProvider.getDriver.FindElement(By.CssSelector(".action-primary.action-accept"));
+        By addToCompareButton = By.XPath("(.//span[text()='Compare +'])[3]");
+        By compareButton = By.CssSelector("a.action.compare.primary.btn");
+        By confirmSelectionRemoval = By.CssSelector(".action-primary.action-accept");
 
-        [FindsBy(How = How.XPath, Using = ".//span[text()='Compare +']")]
-        private IWebElement addToCompareButton;
+        //[FindsBy(How = How.XPath, Using = ".//span[text()='Compare +']")]
+        //private IWebElement addToCompareButton;
 
-        [FindsBy(How = How.XPath, Using = ".//div[@class='ViewDetails']")]
-        private IWebElement shopNowButton;
+        //[FindsBy(How = How.XPath, Using = ".//div[@class='ViewDetails']")]
+        //private IWebElement shopNowButton;
 
 
         /* Page methods */
