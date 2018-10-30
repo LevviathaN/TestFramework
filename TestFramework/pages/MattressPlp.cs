@@ -18,29 +18,31 @@ namespace TestFramework.pages
             pageTitle = "BR Mattresses";
         }
 
+
         /* Page elements */
-        By addToCompareButton = By.XPath("(.//span[text()='Compare +'])[3]");
+        By addToCompareButton = By.XPath("(.//span[text()='Compare +'])[7]");
         By compareButton = By.CssSelector("a.action.compare.primary.btn");
         By confirmSelectionRemoval = By.CssSelector(".action-primary.action-accept");
-
-        //[FindsBy(How = How.XPath, Using = ".//span[text()='Compare +']")]
-        //private IWebElement addToCompareButton;
-
-        //[FindsBy(How = How.XPath, Using = ".//div[@class='ViewDetails']")]
-        //private IWebElement shopNowButton;
+        By shopNowButton = By.XPath(".//div[@class='ViewDetails']");
 
 
         /* Page methods */
+        /// <summary>
+        /// Adds to compare.
+        /// </summary>
         public void addToCompare()
         {
-            click(addToCompareButton);
+            scrollToView(addToCompareButton);
+            clickOnElement(addToCompareButton);
         }
 
+        /// <summary>
+        /// Shops the now.
+        /// </summary>
         public void shopNow()
         {
-            click(shopNowButton);
+            scrollToView(shopNowButton);
+            clickOnElement(shopNowButton);
         }
-
-
     }
 }

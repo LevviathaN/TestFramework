@@ -20,7 +20,6 @@ namespace TestFramework.pages
 
         public static ThreadLocal<IWebDriver> thread = new ThreadLocal<IWebDriver>();
         public static IWebDriver driver() {return thread.Value;}
-        //public static IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
 
         public static int DEFAULT_TIMEOUT = getTimeout();
         public static int SHORT_TIMEOUT = getShortTimeout();
@@ -33,6 +32,10 @@ namespace TestFramework.pages
         DragNdropScript = "var ball = document.getElementById('ball'); ball.style.position = 'absolute'; moveAt(e); ";
 
 
+        /// <summary>
+        /// Gets the timeout.
+        /// </summary>
+        /// <returns>The timeout.</returns>
         private static int getTimeout()
         {
             //string timeout = FileIO.getConfigProperty("DefaultTimeoutInSeconds");
@@ -47,6 +50,10 @@ namespace TestFramework.pages
             return Int32.Parse(timeout);
         }
 
+        /// <summary>
+        /// Gets the short timeout.
+        /// </summary>
+        /// <returns>The short timeout.</returns>
         private static int getShortTimeout()
         {
             //string timeout = FileIO.getConfigProperty("ShortTimeoutInSeconds");
@@ -59,6 +66,10 @@ namespace TestFramework.pages
             return Int32.Parse(timeout);
         }
 
+        /// <summary>
+        /// Gets the static timeout.
+        /// </summary>
+        /// <returns>The static timeout.</returns>
         private static int getStaticTimeout()
         {
             //string timeout = FileIO.getConfigProperty("StaticTimeoutMilliseconds");
@@ -76,9 +87,9 @@ namespace TestFramework.pages
          *----------------------------Basic assertion---------------------------------*
          *--------------------------------------------------------------------------*/
         /// <summary>
-        /// Ises the page loaded.
+        /// Check if the page is loaded.
         /// </summary>
-        /// <returns><c>true</c>, if page loaded was ised, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c>, if page was loaded, <c>false</c> otherwise.</returns>
         public bool isPageLoaded()
         {
             bool result = false;
@@ -101,11 +112,16 @@ namespace TestFramework.pages
             return result;
         }
 
+        /// <summary>
+        /// Check if element is present and display.
+        /// </summary>
+        /// <returns><c>true</c>, if element present and display was ised, <c>false</c> otherwise.</returns>
+        /// <param name="by">By.</param>
         public bool isElementPresentAndDisplay(By by)
         {
             try
             {
-                return findElementIgnoreException(by).isDisplayed();
+                return findElementIgnoreException(by).Displayed;
             }
             catch (Exception e)
             {
@@ -141,6 +157,10 @@ namespace TestFramework.pages
             }
         }
 
+        /// <summary>
+        /// Closes the welcome message.
+        /// </summary>
+        /// <returns>The welcome message.</returns>
         public HomePage closeWelcomeMessage()
         {
             //reporter.info("Closing welcome popup");
@@ -157,18 +177,20 @@ namespace TestFramework.pages
         /// </summary>
         /// <param name="toHover">To hover.</param>
         /// <param name="toClick">To click.</param>
-        public static void hoverAndClick(IWebElement toHover, IWebElement toClick)
+        public static void hoverAndClick(By toHover, By toClick, params int[] timeout)
         {
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+            waitForPageToLoad();
             try
             {
-                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover);
-                ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, toClick);
+                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, driver().FindElement(toHover));
+                ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, driver().FindElement(toClick));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
                 hoverAndClick(toHover, toClick);
             }
+            waitForPageToLoad();
         }
 
         /// <summary>
@@ -177,15 +199,17 @@ namespace TestFramework.pages
         /// <param name="toHover1">To hover1.</param>
         /// <param name="toHover2">To hover2.</param>
         /// <param name="toClick">To click.</param>
-        public static void hoverAndClick(IWebElement toHover1, IWebElement toHover2, IWebElement toClick)
+        public static void hoverAndClick(By toHover1, By toHover2, By toClick, params int[] timeout)
         {
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+            waitForPageToLoad();
             try
             {
                 ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover1);
                 ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover2);
                 ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, toClick);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 hoverAndClick(toHover1, toHover2, toClick);
             }
@@ -196,31 +220,46 @@ namespace TestFramework.pages
         /// </summary>
         /// <returns>The hover.</returns>
         /// <param name="element">Element.</param>
-        public static IWebElement hover(IWebElement element)
+        public static By hover(By element, params int[] timeout)
         {
-            ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, element);
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+            waitForPageToLoad();
+            try
+            {
+                (new WebDriverWait(driver(), TimeSpan.FromSeconds(timeoutForFindElement)))
+                    .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
+                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, driver().FindElement(element));
+            }
+            catch (Exception e)
+            {
+                //reporter.fail(Tools.getStackTrace(e));
+                throw new Exception("Failure hovering on element");
+            }
+            waitForPageToLoad();
             return element;
         }
-
-        /// <summary>
-        /// Click the specified element.
-        /// </summary>
-        /// <returns>The click.</returns>
-        /// <param name="element">Element.</param>
-        public static IWebElement click(IWebElement element)
-        {
-            ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, element);
-            return element;
-        }
-
+         
         /// <summary>
         /// Drags and drop specified element
         /// </summary>
         /// <returns>The ndrop.</returns>
         /// <param name="element">Element.</param>
-        public static IWebElement dragNdrop(IWebElement element)
+        public static By dragNdrop(By element, params int[] timeout)
         {
-            ((IJavaScriptExecutor)driver()).ExecuteScript(DragNdropScript, element);
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+            waitForPageToLoad();
+            try
+            {
+                (new WebDriverWait(driver(), TimeSpan.FromSeconds(timeoutForFindElement)))
+                    .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
+                ((IJavaScriptExecutor)driver()).ExecuteScript(DragNdropScript, driver().FindElement(element));
+            }
+            catch (Exception e)
+            {
+                //reporter.fail(Tools.getStackTrace(e));
+                throw new Exception("Failure dragging the element");
+            }
+            waitForPageToLoad();
             return element;
         }
 
@@ -248,18 +287,15 @@ namespace TestFramework.pages
             }
         }
 
-
         /// <summary>
         /// Finds the element ignore exception.
         /// </summary>
         /// <returns>The element ignore exception.</returns>
         /// <param name="element">Element.</param>
-        public static IWebElement findElementIgnoreException(By element)
-        //public static IWebElement findElementIgnoreException(By element, int[] timeout) don't understand meaning and purpose of int[] (int... in java)
+        public static IWebElement findElementIgnoreException(By element, params int[] timeout)
         {
             waitForPageToLoad();
-            //int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
-            int timeoutForFindElement = DEFAULT_TIMEOUT;
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
             waitForPageToLoad();
             try
             {
@@ -280,14 +316,11 @@ namespace TestFramework.pages
         /// <returns>The element ignore exception.</returns>
         /// <param name="element">Element.</param>
         /// <param name="timeout">Timeout.</param>
-        public static void clickOnElementIgnoreException(By element)
+        public static void clickOnElementIgnoreException(By element, params int[] timeout)
 
         {
-            //public static IWebElement clickElementIgnoreException(By element, int[] timeout) don't understand meaning and purpose of int[] (int... in java)
             waitForPageToLoad();
-            //int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
-            int timeoutForFindElement = DEFAULT_TIMEOUT;
-            waitForPageToLoad();
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
             try
             {
                 //synchronize();
@@ -299,6 +332,112 @@ namespace TestFramework.pages
             {
                 Console.WriteLine("error");
             }
+            waitForPageToLoad();
         }
+
+        /// <summary>
+        /// Finds the element.
+        /// </summary>
+        /// <returns>The element.</returns>
+        /// <param name="element">Element.</param>
+        /// <param name="timeout">Timeout.</param>
+        public static IWebElement findElement(By element, params int[] timeout)
+        {
+            waitForPageToLoad();
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+            waitForPageToLoad();
+            try
+            {
+                //synchronize();
+                (new WebDriverWait(driver(), TimeSpan.FromSeconds(timeoutForFindElement)))
+                        .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
+                return driver().FindElement(element);
+            }
+            catch (Exception e)
+            {
+                //reporter.fail(Tools.getStackTrace(e));
+                throw new Exception("Failure finding element");
+            }
+        }
+
+        /// <summary>
+        /// Click the specified element.
+        /// </summary>
+        /// <returns>The click.</returns>
+        /// <param name="element">Element.</param>
+        public static void clickOnElement(By element, params int[] timeout)
+        {
+            int timeoutForFindElement = timeout.Length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+            waitForPageToLoad();
+            try
+            {
+                (new WebDriverWait(driver(), TimeSpan.FromSeconds(timeoutForFindElement)))
+                    .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
+                driver().FindElement(element).Click();
+            }
+            catch (Exception e)
+            {
+                //reporter.fail(Tools.getStackTrace(e));
+                throw new Exception("Failure clicking on element");
+            }
+            waitForPageToLoad();
+            //((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, element);
+        }
+
+        /// <summary>
+        /// Switchs to frame.
+        /// </summary>
+        /// <param name="xpath">Xpath.</param>
+        public void switchToFrame(By xpath)
+        {
+            //reporter.info("Switch to frame: " + xpath.toString());
+            driver().SwitchTo().Frame(findElement(xpath));
+        }
+
+        /// <summary>
+        /// Switchs the content of the to default.
+        /// </summary>
+        public void switchToDefaultContent()
+        {
+            //reporter.info("Switch to default content");
+            driver().SwitchTo().DefaultContent();
+        }
+
+        /// <summary>
+        /// Scrolls to XY position.
+        /// </summary>
+        /// <param name="xPosition">X position.</param>
+        /// <param name="yPosition">Y position.</param>
+        public void scrollTo(int xPosition = 0, int yPosition = 0)
+        {
+            var js = String.Format("window.scrollTo({0}, {1})", xPosition, yPosition);
+            ((IJavaScriptExecutor)driver()).ExecuteScript(js);
+        }
+
+        /// <summary>
+        /// Scrolls to view element by selector.
+        /// </summary>
+        /// <returns>The to view.</returns>
+        /// <param name="selector">Selector.</param>
+        public IWebElement scrollToView(By selector)
+        {
+            var element = driver().FindElement(selector);
+            scrollToView(element);
+            return element;
+        }
+
+        /// <summary>
+        /// Scrolls to view element.
+        /// </summary>
+        /// <param name="element">Element.</param>
+        public void scrollToView(IWebElement element)
+        {
+            if (element.Location.Y > 200)
+            {
+                scrollTo(0, element.Location.Y - 100); // Make sure element is in the view but below the top navigation pane
+            }
+
+        }
+
     }
 }

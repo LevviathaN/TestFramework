@@ -35,7 +35,7 @@ namespace TestFramework
                     break;
             }
             webDriver.Manage().Window.Maximize();
-            Goto(baseURL);
+            //Goto(baseURL);
         }
 
         public static string Title
