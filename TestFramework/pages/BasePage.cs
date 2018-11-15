@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Configuration;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -14,7 +15,7 @@ namespace TestFramework.pages
 {
     public class BasePage
     {
-        public const string BASE_URL = "https://br.tomorrowsleep.com";
+        public string BASE_URL = ConfigurationManager.AppSettings["base url"];
         public string pageURL = "";
         public string pageTitle = "";
 

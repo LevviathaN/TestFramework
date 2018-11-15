@@ -45,6 +45,10 @@
     <Reference Include="WebDriver.Support">
       <HintPath>..\packages\Selenium.Support.3.6.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,19 +61,30 @@
     <Compile Include="utils\DriverProvider.cs" />
     <Compile Include="utils\ReportingManager.cs" />
     <Compile Include="utils\ReportingTasks.cs" />
-    <Compile Include="test\Comparison_Test.cs" />
     <Compile Include="pages\BasePage.cs" />
     <Compile Include="pages\BlackPlp.cs" />
     <Compile Include="utils\Pages.cs" />
-    <Compile Include="test\Product_Filter_Test.cs" />
+    <Compile Include="utils\JSONReader.cs" />
+    <Compile Include="test\general_test\Comparison_Test.cs" />
+    <Compile Include="test\general_test\Product_Filter_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="data\default_properties.json" />
+    <None Include="data\app.config" />
+    <None Include="drivers\chromedriver_linux" />
+    <None Include="drivers\chromedriver_mac" />
+    <None Include="drivers\chromedriver.exe" />
+    <None Include="drivers\geckodriver_linux" />
+    <None Include="drivers\geckodriver_mac" />
+    <None Include="drivers\geckodriver.exe" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
     <Folder Include="pages\" />
     <Folder Include="test\" />
+    <Folder Include="drivers\" />
+    <Folder Include="test\general_test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

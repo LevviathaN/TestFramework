@@ -17,6 +17,8 @@ namespace TestFramework.pages
         By products = By.XPath("(.//A[@class='nav-link'])[1]");
         By mattresses = By.XPath(".//A[@class='nav-link active d-flex flex-column justify-content-center'][text()='Mattresses']");
         By black = By.XPath(".//a[text()='Black']");
+        By platinum = By.XPath(".//a[text()='Platinum']");
+        By silver = By.XPath(".//a[text()='Silver']");
 
 
         /*Page Methods*/
@@ -37,6 +39,26 @@ namespace TestFramework.pages
         public BlackPlp openBlackPlp()
         {
             hoverAndClick(products, mattresses, black);
+            return BlackPlp.Instance;
+        }
+
+        /// <summary>
+        /// Opens the platinum plp.
+        /// </summary>
+        /// <returns>The platinum plp.</returns>
+        public BlackPlp openPlatinumPlp()
+        {
+            hoverAndClick(products, mattresses, platinum);
+            return BlackPlp.Instance;
+        }
+
+        /// <summary>
+        /// Opensilvers the plp.
+        /// </summary>
+        /// <returns>The plp.</returns>
+        public BlackPlp openSilverPlp()
+        {
+            hoverAndClick(products, mattresses, silver);
             return BlackPlp.Instance;
         }
 
