@@ -27,8 +27,10 @@ namespace TestFramework.pages
         public static int STATIC_TIMEOUT = getStaticTimeout();
 
         public static string
-        mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}",
-        mouseOverScript2 = "var evObj = document.createEvent('MouseEvents'); evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null); arguments[0].dispatchEvent(evObj);",
+        mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); " +
+        	"arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}",
+        mouseOverScript2 = "var evObj = document.createEvent('MouseEvents'); " +
+        	"evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null); arguments[0].dispatchEvent(evObj);",
         clickScript = "arguments[0].click();",
         DragNdropScript = "var ball = document.getElementById('ball'); ball.style.position = 'absolute'; moveAt(e); ";
 
@@ -124,7 +126,7 @@ namespace TestFramework.pages
             {
                 return findElementIgnoreException(by).Displayed;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -140,22 +142,8 @@ namespace TestFramework.pages
         /// </summary>
         public void open()
         {
-            //reporter.info("Opening the page: " + "\"" + BASE_URL + pageURL + "\"");
-            //if (FileIO.getConfigProperty("EnvType").equals("Staging"))
-            int a = 1;
-            if (a==1)
-            {
-                driver().Url =("https://bettersleep:stg-tsleep-@45@br.tomorrowsleep.com" + pageURL);
-                closeWelcomeMessage();
-            }
-            else
-            {
-                Cookie A_B_test = new Cookie("cxl_exp_1564305_var", "0");
-                driver().Url = BASE_URL + pageURL;
-                //driver().Manage().Cookies(A_B_test);
-                waitForPageToLoad();
-                closeWelcomeMessage();
-            }
+            driver().Url = DriverProvider.baseURL + pageURL;
+            closeWelcomeMessage();
         }
 
         /// <summary>
@@ -187,7 +175,7 @@ namespace TestFramework.pages
                 ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, driver().FindElement(toHover));
                 ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, driver().FindElement(toClick));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 hoverAndClick(toHover, toClick);
             }
@@ -206,11 +194,11 @@ namespace TestFramework.pages
             waitForPageToLoad();
             try
             {
-                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover1);
-                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, toHover2);
-                ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, toClick);
+                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, driver().FindElement(toHover1));
+                ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, driver().FindElement(toHover2));
+                ((IJavaScriptExecutor)driver()).ExecuteScript(clickScript, driver().FindElement(toClick));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 hoverAndClick(toHover1, toHover2, toClick);
             }
@@ -231,7 +219,7 @@ namespace TestFramework.pages
                     .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
                 ((IJavaScriptExecutor)driver()).ExecuteScript(mouseOverScript, driver().FindElement(element));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //reporter.fail(Tools.getStackTrace(e));
                 throw new Exception("Failure hovering on element");
@@ -255,7 +243,7 @@ namespace TestFramework.pages
                     .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
                 ((IJavaScriptExecutor)driver()).ExecuteScript(DragNdropScript, driver().FindElement(element));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //reporter.fail(Tools.getStackTrace(e));
                 throw new Exception("Failure dragging the element");
@@ -283,7 +271,7 @@ namespace TestFramework.pages
             {
                 Thread.Sleep(timeout);
             }
-            catch (ThreadInterruptedException e)
+            catch (ThreadInterruptedException)
             {
             }
         }
@@ -305,7 +293,7 @@ namespace TestFramework.pages
                         .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
                 return driver().FindElement(element);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -329,7 +317,7 @@ namespace TestFramework.pages
                         .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
                 driver().FindElement(element).Click();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("error");
             }
@@ -354,7 +342,7 @@ namespace TestFramework.pages
                         .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
                 return driver().FindElement(element);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //reporter.fail(Tools.getStackTrace(e));
                 throw new Exception("Failure finding element");
@@ -376,7 +364,7 @@ namespace TestFramework.pages
                     .Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
                 driver().FindElement(element).Click();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //reporter.fail(Tools.getStackTrace(e));
                 throw new Exception("Failure clicking on element");
@@ -386,7 +374,7 @@ namespace TestFramework.pages
         }
 
         /// <summary>
-        /// Switchs to frame.
+        /// Switchs to frame (working with iFrames).
         /// </summary>
         /// <param name="xpath">Xpath.</param>
         public void switchToFrame(By xpath)
@@ -396,7 +384,7 @@ namespace TestFramework.pages
         }
 
         /// <summary>
-        /// Switchs the content of the to default.
+        /// Switchs the content of the to default. (working with iFrames)
         /// </summary>
         public void switchToDefaultContent()
         {

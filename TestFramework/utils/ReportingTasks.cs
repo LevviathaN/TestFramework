@@ -24,8 +24,7 @@ namespace TestFramework.utils
         /// </summary>
         public void InitializeTest()
         {
-            //_test = _extent.StartTest(TestContext.CurrentContext.Test.Name);
-            _test = _extent.StartTest("Test");
+            _test = _extent.StartTest(TestContext.CurrentContext.Test.Name);
         }
 
         /// <summary>

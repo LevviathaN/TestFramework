@@ -67,6 +67,15 @@
     <Compile Include="utils\JSONReader.cs" />
     <Compile Include="test\general_test\Comparison_Test.cs" />
     <Compile Include="test\general_test\Product_Filter_Test.cs" />
+    <Compile Include="pages\PlatinumPlp.cs" />
+    <Compile Include="pages\SilverPlp.cs" />
+    <Compile Include="pages\ProductPage.cs" />
+    <Compile Include="test\full_test\Black_Calista_Mattress_Full_Test.cs" />
+    <Compile Include="utils\UserEntity.cs" />
+    <Compile Include="utils\ItemEntity.cs" />
+    <Compile Include="pages\CartPage.cs" />
+    <Compile Include="pages\CheckoutPage.cs" />
+    <Compile Include="pages\AdminPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -78,6 +87,7 @@
     <None Include="drivers\geckodriver_linux" />
     <None Include="drivers\geckodriver_mac" />
     <None Include="drivers\geckodriver.exe" />
+    <None Include="data\user.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
@@ -85,6 +95,7 @@
     <Folder Include="test\" />
     <Folder Include="drivers\" />
     <Folder Include="test\general_test\" />
+    <Folder Include="test\full_test\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

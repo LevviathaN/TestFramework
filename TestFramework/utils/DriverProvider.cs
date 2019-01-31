@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,13 @@ namespace TestFramework
     { 
         private static IWebDriver webDriver;
         public static ReportingTasks reports;
-        //private static string baseURL = "https://bettersleep:stg-tsleep-%4045@br.tomorrowsleep.com";
-        private static string browser = ConfigurationManager.AppSettings["browser"];
+        public static string baseURL = ConfigurationManager.AppSettings["base_url"];
+        public static string browser = ConfigurationManager.AppSettings["browser"];
+        private static FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "/drivers"); // location of the geckdriver.exe file
 
+        /// <summary>
+        /// Initiate WebDriver object with driver of browser, set in properties file.
+        /// </summary>
         public static void Init()
         {
             switch (browser)
@@ -32,13 +37,17 @@ namespace TestFramework
                     webDriver = new InternetExplorerDriver();
                     break;
                 case "Firefox":
-                    webDriver = new FirefoxDriver();
+                    webDriver = new FirefoxDriver(service);
                     break;
             }
             //webDriver.Manage().Window.Maximize();
             //Goto(baseURL);
         }
 
+        /// <summary>
+        /// Returns title of the page.
+        /// </summary>
+        /// <value>The title.</value>
         public static string Title
         {
             get { return webDriver.Title; }
@@ -59,6 +68,10 @@ namespace TestFramework
             webDriver.Quit();
         }
 
+        /// <summary>
+        /// Returns type of current OS
+        /// </summary>
+        /// <returns>The os.</returns>
         public static string GetOS()
         {
             OperatingSystem os = Environment.OSVersion;
