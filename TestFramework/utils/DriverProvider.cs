@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Remote;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -31,7 +32,14 @@ namespace TestFramework
             switch (browser)
             {
                 case "Chrome":
-                    webDriver = new ChromeDriver();
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    //chromeOptions.AddArguments("--kiosk");
+                    chromeOptions.AddArguments("--start-maximized");
+                    chromeOptions.AddArguments("--start-fullscreen");
+                    //chromeOptions.AddArguments("--headless");
+                    chromeOptions.AddArguments("--window-size=1920,1080");
+                    chromeOptions.AddArgument("port=51192");
+                    webDriver = new ChromeDriver(chromeOptions);
                     break;
                 case "IE":
                     webDriver = new InternetExplorerDriver();
