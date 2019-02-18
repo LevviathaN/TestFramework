@@ -12,13 +12,13 @@ namespace TestFramework.test
     [TestFixture]
     public class Product_Filter_Test:BaseTest
     {
-        [Test]
+        //[Test]
         public void moveTypeSliderTest()
         {
             UserEntity user = UserEntity.getUser(@"/data/user.json");
         }
 
-        [Test]
+        //[Test]
         public void movePriceSliderTest()
         {
             Console.WriteLine("Move Price Slider Test Method execution");

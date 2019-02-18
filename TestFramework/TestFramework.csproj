@@ -93,11 +93,19 @@
     <Compile Include="pages\BR_pages\ProductPage.cs" />
     <Compile Include="pages\BR_pages\SilverPlp.cs" />
     <Compile Include="pages\BasePage.cs" />
-    <Compile Include="test\BR_test\Black_Calista_Mattress_Full_Test.cs" />
     <Compile Include="test\BR_test\Comparison_Test.cs" />
     <Compile Include="test\BR_test\Product_Filter_Test.cs" />
     <Compile Include="pages\TS_pages\MagazinePage.cs" />
     <Compile Include="test\general_test\SheetsQuickstart.cs" />
+    <Compile Include="utils\GoogleSheets.cs" />
+    <Compile Include="test\TS_test\ProductFullFlowTest.cs" />
+    <Compile Include="pages\TS_pages\TS_HomePage.cs" />
+    <Compile Include="pages\TS_pages\TS_ProductPage.cs" />
+    <Compile Include="pages\TS_pages\TS_CartPage.cs" />
+    <Compile Include="pages\TS_pages\TS_CheckoutPage.cs" />
+    <Compile Include="pages\TS_pages\TS_PageHeader.cs" />
+    <Compile Include="pages\TS_pages\TS_ShopPlp.cs" />
+    <Compile Include="test\general_test\DebugTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -110,6 +118,7 @@
     <None Include="drivers\geckodriver_mac" />
     <None Include="drivers\geckodriver.exe" />
     <None Include="data\user.json" />
+    <None Include="data\Default_User.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

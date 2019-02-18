@@ -20,7 +20,7 @@ namespace TestFramework
     { 
         private static IWebDriver webDriver;
         public static ReportingTasks reports;
-        public static string baseURL = ConfigurationManager.AppSettings["base_url"];
+        public static string baseURL = ConfigurationManager.AppSettings["site"] == "TS" ? ConfigurationManager.AppSettings["ts_base_url"] : ConfigurationManager.AppSettings["br_base_url"];
         public static string browser = ConfigurationManager.AppSettings["browser"];
         private static FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "/drivers"); // location of the geckdriver.exe file
 
@@ -35,10 +35,10 @@ namespace TestFramework
                     ChromeOptions chromeOptions = new ChromeOptions();
                     //chromeOptions.AddArguments("--kiosk");
                     chromeOptions.AddArguments("--start-maximized");
-                    chromeOptions.AddArguments("--start-fullscreen");
+                    //chromeOptions.AddArguments("--start-fullscreen");
                     //chromeOptions.AddArguments("--headless");
-                    chromeOptions.AddArguments("--window-size=1920,1080");
-                    chromeOptions.AddArgument("port=51192");
+                    //chromeOptions.AddArguments("--window-size=1920,1080");
+                    //chromeOptions.AddArgument("port=8000");
                     webDriver = new ChromeDriver(chromeOptions);
                     break;
                 case "IE":

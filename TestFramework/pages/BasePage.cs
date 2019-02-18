@@ -15,7 +15,6 @@ namespace TestFramework.pages
 {
     public class BasePage
     {
-        public string BASE_URL = ConfigurationManager.AppSettings["base url"];
         public string pageURL = "";
         public string pageTitle = "";
 
@@ -250,6 +249,15 @@ namespace TestFramework.pages
             }
             waitForPageToLoad();
             return element;
+        }
+
+        public void setText(By element, string value)
+        {
+            if (value != null)
+            {
+                findElement(element).Clear();
+                findElement(element).SendKeys(value);
+            }
         }
 
         /// <summary>

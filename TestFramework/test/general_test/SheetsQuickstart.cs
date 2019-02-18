@@ -20,7 +20,7 @@ namespace SheetsQuickstart
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "Google Sheets API .NET Quickstart";
 
-        [Test]
+        //[Test]
         public void doIt()
         {
             UserCredential credential;
