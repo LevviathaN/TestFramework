@@ -16,7 +16,10 @@ namespace TestFramework.test.general_test
         public void relativePathDisplayTest()
         {
             Console.WriteLine(Directory.GetCurrentDirectory());
+            Console.Write("Used in'ReportingManager' class: ");
             Console.WriteLine(TestContext.CurrentContext.TestDirectory);
+            Console.Write("Used in'BaseTest' class: ");
+            Console.WriteLine(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
         }
 
         [Test]

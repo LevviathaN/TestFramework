@@ -18,7 +18,6 @@ namespace TestFramework.test
             PageHeader header = PageHeader.Instance;
             MattressPlp mattressPlp = MattressPlp.Instance;
 
-            Console.WriteLine("Comparison Test Method execution");
             header.open();
             header.openMattressPlp();
             mattressPlp.addToCompare();

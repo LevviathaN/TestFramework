@@ -8,14 +8,15 @@ namespace TestFramework.utils
 {
     public class ReportingTasks
     {
-        private ExtentReports _extent;
+        private static string fileName = DateTime.Now.ToString("dd'-'MM'-'yy") + " " + DateTime.Now.ToString("t");
+        private ExtentReports _extent = new ExtentReports(TestContext.CurrentContext.TestDirectory + fileName + ".html");
         private ExtentTest _test;
 
-        /// <summary>Initializes a new instance of the <see cref="ReportingTasks"/> class.</summary>
-        /// <param name="extentInstance">The extent instance.</param>
-        public ReportingTasks(ExtentReports extentInstance)
+        /// <summary>Property to return the instance of the report.</summary>
+        /// <value>The instance</value>
+        public ExtentReports Instance
         {
-            _extent = extentInstance;
+            get{return _extent;}
         }
 
         /// <summary>
@@ -66,6 +67,15 @@ namespace TestFramework.utils
         public void CleanUpReporting()
         {
             _extent.Close();
+        }
+
+        /// <summary>
+        /// Log information.
+        /// </summary>
+        /// <param name="details">Details.</param>
+        public void info(string details)
+        {
+            _test.Log(LogStatus.Info, details);
         }
     }
 }
