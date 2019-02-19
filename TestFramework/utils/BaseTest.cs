@@ -42,7 +42,8 @@ namespace TestFramework
             DriverProvider.Init();
             BasePage.thread.Value = DriverProvider.getDriver;
 
-            reporter.Instance.LoadConfig(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
+            ExtentReports extentReports = ReportingTasks.Instance;
+            extentReports.LoadConfig(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.FullName + "\\extent-config.xml");
             reporter = new ReportingTasks();
 
         }

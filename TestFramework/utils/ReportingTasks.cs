@@ -9,12 +9,12 @@ namespace TestFramework.utils
     public class ReportingTasks
     {
         private static string fileName = DateTime.Now.ToString("dd'-'MM'-'yy") + " " + DateTime.Now.ToString("t");
-        private ExtentReports _extent = new ExtentReports(TestContext.CurrentContext.TestDirectory + fileName + ".html");
+        private static ExtentReports _extent = new ExtentReports(TestContext.CurrentContext.TestDirectory + fileName + ".html");
         private ExtentTest _test;
 
         /// <summary>Property to return the instance of the report.</summary>
         /// <value>The instance</value>
-        public ExtentReports Instance
+        public static ExtentReports Instance
         {
             get{return _extent;}
         }
